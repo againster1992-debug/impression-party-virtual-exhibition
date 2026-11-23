@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1512">
+<title>印象·派对 · 上博东馆印象派特展线上展厅</title>
+<meta name="description" content="依据上海博物馆东馆「印象·派对：POLA 美术馆藏近现代绘画特展」现场图文制作的线上展厅，含 6 个单元、61 组展项、35 位画家与关系图。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e1512'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23c9a45c' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23c9a45c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ 首页 ============ -->
+  <section id="intro" class="screen intro">
+    <div class="intro-bg"><img id="introBgImg" alt=""></div>
+    <div class="intro-grain"></div>
+    <header class="intro-top">
+      <div class="brand-mark">印</div>
+      <div class="brand-text">印象·派对 · 线上展厅</div>
+      <img class="otter-avatar" src="assets/otter-face.png" alt="獭的游乐场" title="獭的游乐场">
+      <div class="intro-top-actions">
+        <button class="ghost-btn dark music-btn" id="introMusicBtn" type="button" title="背景音乐《Vincent》"><span class="music-icon">♪</span><span class="music-text">Vincent</span></button>
+        <button class="ghost-btn dark" id="introSupplementBtn" type="button">补充资料</button>
+        <button class="ghost-btn dark" id="introGuideBtn" type="button">观展指南</button>
+      </div>
+    </header>
+
+    <main class="intro-main">
+      <div class="intro-copy">
+        <p class="eyebrow">IMPRESSIONIST PARTY · SHANGHAI MUSEUM EAST</p>
+        <h1 class="intro-title"><span>印</span><span>象</span><span>派</span><span>对</span></h1>
+        <p class="intro-sub">POLA 美术馆藏近现代绘画特展</p>
+        <p class="intro-lede">从库尔贝的雪林、柯罗的银灰风景，到莫奈的光、凡·高的色彩，再到东方画家的回响与当代摄影中的光。沿六个单元走进一场跨越百年的“派对”。</p>
+        <div class="intro-stats" id="introStats"></div>
+        <div class="intro-actions">
+          <button class="primary" id="enterBtn">进入展厅 <span>→</span></button>
+          <button class="secondary" id="introCatalogBtn">展品目录</button>
+          <button class="secondary" id="introTimelineBtn">时间轴</button>
+          <button class="secondary" id="introNetworkBtn">艺术家关系</button>
+        </div>
+        <p class="intro-source" id="introSource"></p>
+      </div>
+
+      <div class="intro-visual" id="introVisual">
+        <div class="intro-collage" id="introCollage"></div>
+      </div>
+    </main>
+
+    <footer class="intro-footer">
+      <span class="footer-brand"><img class="otter-foot" src="assets/otter.png" alt=""> 獭的游乐场</span>
+      <span>图文整理自 @ag獭 现场记录 · 仅供学习交流</span>
+      <span class="intro-enter-hint">点击“进入展厅”，开始漫游</span>
+    </footer>
+  </section>
+
+  <!-- ============ 展厅 ============ -->
+  <section id="gallery" class="screen gallery" hidden>
+    <header class="gallery-top">
+      <button class="icon-btn" id="backHomeBtn" title="返回首页">← <span class="home-text">首页</span></button>
+      <div class="gallery-brand"><span class="mini-seal">印</span><span>印象·派对</span><img class="otter-mini" src="assets/otter-face.png" alt="獭的游乐场" title="獭的游乐场"></div>
+      <div class="gallery-room-label">
+        <span id="roomChapter">第一单元</span>
+        <b id="roomTitle">破冰游戏</b>
+      </div>
+      <div class="gallery-progress" title="观展进度">
+        <div class="progress-track"><i id="progressBar"></i></div>
+        <span id="progressText">0 / 61</span>
+      </div>
+      <button class="ghost-btn music-btn" id="galleryMusicBtn" type="button" title="背景音乐《Vincent》"><span class="music-icon">♪</span><span class="music-text">Vincent</span></button>
+      <button class="ghost-btn" id="openTimelineBtn"><span class="lbl-full">时间轴</span><span class="lbl-short">时间</span></button>
+      <button class="ghost-btn" id="openNetworkBtn"><span class="lbl-full">关系图</span><span class="lbl-short">关系</span></button>
+      <button class="ghost-btn" id="openCatalogBtn"><span class="lbl-full">展品目录</span><span class="lbl-short">目录</span></button>
+      <button class="ghost-btn" id="openSupplementBtn"><span class="lbl-full">补充资料</span><span class="lbl-short">资料</span></button>
+      <button class="ghost-btn" id="openGuideBtn"><span class="lbl-full">观展指南</span><span class="lbl-short">指南</span></button>
+    </header>
+
+    <div class="gallery-stage" id="stage">
+      <div class="ceiling"></div>
+      <div class="wall-bg"></div>
+      <div class="floor"></div>
+      <div class="wall-viewport" id="wallViewport">
+        <div class="wall" id="wall"></div>
+      </div>
+      <button class="nav-arrow left" id="prevBtn" title="向前">‹</button>
+      <button class="nav-arrow right" id="nextBtn" title="向后">›</button>
+      <div class="pan-hint" id="panHint">拖动 / 滚轮横向移动 · 点击画作查看详情</div>
+      <div class="room-loading" id="roomLoading"><span></span></div>
+    </div>
+
+    <footer class="gallery-bottom">
+      <div class="room-route" id="roomRoute"></div>
+      <div class="pan-track"><i id="panFill"></i></div>
+    </footer>
+  </section>
+
+  <!-- ============ 单元门槛 ============ -->
+  <div class="overlay threshold" id="threshold" hidden>
+    <div class="threshold-shade"></div>
+    <div class="threshold-panel" id="thresholdPanel">
+      <p class="threshold-kicker" id="thresholdKicker"></p>
+      <h2 class="threshold-title" id="thresholdTitle"></h2>
+      <p class="threshold-sub" id="thresholdSub"></p>
+      <div class="threshold-intro" id="thresholdIntro"></div>
+      <button class="primary" id="thresholdEnterBtn">进入展厅 <span>→</span></button>
+      <p class="threshold-tip">进入后：拖动或滚动鼠标横向移动，点击画作查看详细信息</p>
+    </div>
+  </div>
+
+  <!-- ============ 展品详情 ============ -->
+  <div class="overlay detail" id="detail" hidden>
+    <header class="detail-top">
+      <button class="icon-btn" id="detailCloseBtn">← <span>返回展厅</span></button>
+      <span class="detail-counter" id="detailCounter"></span>
+      <div class="detail-nav">
+        <button class="ghost-btn" id="detailPrevBtn">← 上一件</button>
+        <button class="ghost-btn" id="detailNextBtn">下一件 →</button>
+      </div>
+    </header>
+    <main class="detail-main">
+      <section class="viewer" id="viewer">
+        <div class="viewer-stage" id="viewerStage">
+          <div class="viewer-art" id="viewerArt"><img id="viewerImg" alt=""></div>
+        </div>
+        <div class="viewer-tools">
+          <button class="tool-btn" id="zoomOutBtn" title="缩小">−</button>
+          <button class="tool-btn" id="zoomResetBtn" title="全览">全览</button>
+          <button class="tool-btn" id="zoomInBtn" title="放大">＋</button>
+          <button class="tool-btn" id="viewerOpenBtn" title="保存带水印图片">保存</button>
+          <button class="tool-btn viewer-full-btn" id="viewerFullBtn" title="全屏查看图片" aria-pressed="false">全屏</button>
+        </div>
+        <button class="viewer-exit" id="viewerExitBtn" type="button" title="退出全屏" aria-label="退出全屏">×</button>
+        <div class="viewer-hint" id="viewerHint">滚轮缩放 · 拖动查看细节 · 双击放大</div>
+        <div class="viewer-scrollbar" id="viewerScrollbar"><i></i></div>
+        <div class="viewer-thumbs" id="viewerThumbs"></div>
+      </section>
+      <aside class="detail-panel" id="detailPanel">
+        <div class="detail-head">
+          <p class="detail-kicker" id="detailKicker"></p>
+          <h2 class="detail-name" id="detailName"></h2>
+          <p class="detail-artist" id="detailArtist"></p>
+          <p class="detail-meta" id="detailMeta"></p>
+        </div>
+        <div class="detail-tags" id="detailTags"></div>
+        <div class="detail-body" id="detailBody"></div>
+        <div class="detail-foot" id="detailFoot"></div>
+        <div class="detail-graph" id="detailGraph"></div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- ============ 展品目录 ============ -->
+  <div class="overlay catalog" id="catalog" hidden>
+    <header class="catalog-top">
+      <div class="catalog-title">
+        <p class="eyebrow">EXHIBIT INDEX</p>
+        <h2>展品目录</h2>
+      </div>
+      <input class="catalog-search" id="catalogSearch" type="search" placeholder="搜索展品、画家或流派…" autocomplete="off">
+      <button class="icon-btn" id="catalogCloseBtn">关闭 ×</button>
+    </header>
+    <div class="catalog-filters" id="catalogFilters"></div>
+    <div class="catalog-summary" id="catalogSummary"></div>
+    <div class="catalog-grid" id="catalogGrid"></div>
+  </div>
+
+  <!-- ============ 时间轴 ============ -->
+  <div class="overlay timeline" id="timeline" hidden>
+    <header class="catalog-top">
+      <div class="catalog-title">
+        <p class="eyebrow">CHRONOLOGY</p>
+        <h2>时间轴</h2>
+      </div>
+      <div class="tl-head-actions">
+        <button class="ghost-btn" id="tlZoomOutBtn" title="缩小年份间距">−</button>
+        <button class="ghost-btn" id="tlResetBtn">重置</button>
+        <button class="ghost-btn" id="tlZoomInBtn" title="放大年份间距">＋</button>
+        <button class="icon-btn" id="timelineCloseBtn">关闭 ×</button>
+      </div>
+    </header>
+    <nav class="tl-schools" id="tlSchoolFilters"></nav>
+    <div class="tl-summary" id="tlSummary"></div>
+    <div class="tl-scroll" id="tlScroll">
+      <div class="tl-canvas" id="tlCanvas">
+        <div class="tl-axis-line"></div>
+        <div class="tl-years" id="tlYears"></div>
+        <div class="tl-items" id="tlItems"></div>
+      </div>
+    </div>
+    <p class="tl-hint">横向拖动浏览 · 滚轮缩放年份间距 · 空白年份已压缩 · 点击缩略图看详情</p>
+  </div>
+
+  <!-- ============ 艺术家关系图 ============ -->
+  <div class="overlay network" id="network" hidden>
+    <header class="catalog-top">
+      <div class="catalog-title">
+        <p class="eyebrow">ARTIST NETWORK</p>
+        <h2>艺术家关系图</h2>
+      </div>
+      <div class="tl-head-actions">
+        <button class="ghost-btn" id="netResetBtn">重置视图</button>
+        <button class="ghost-btn" id="netSupplementBtn">原版展厅关系图</button>
+        <button class="icon-btn" id="networkCloseBtn">关闭 ×</button>
+      </div>
+    </header>
+    <nav class="tl-schools" id="netSchoolFilters"></nav>
+    <p class="net-lede">圆圈越大，代表关系越多、影响越大。关系连线默认隐藏；点击画家后高亮其关系与相关人物，点击空白处恢复。拖动平移，滚轮缩放。</p>
+    <div class="net-main">
+      <div class="net-stage" id="netStage">
+        <svg id="netSvg" viewBox="0 0 1200 820" role="img" aria-label="参展艺术家关系图"></svg>
+        <div class="net-legend">
+          <span><i class="t-shi"></i>师承</span>
+          <span><i class="t-zhi"></i>挚友</span>
+          <span><i class="t-tong"></i>同道</span>
+          <span><i class="t-ying"></i>影响</span>
+          <span><i class="t-lun"></i>论争</span>
+        </div>
+      </div>
+      <aside class="net-panel" id="netPanel">
+        <p class="net-empty">点击左侧任意画家节点，查看其简介、艺术关系与本展作品。</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ============ 画家百科 ============ -->
+  <div class="wiki" id="artistWiki" hidden>
+    <div class="wiki-panel" role="dialog" aria-modal="true" aria-labelledby="awName">
+      <p class="wiki-kicker">ARTIST ENCYCLOPEDIA</p>
+      <h3 class="wiki-title" id="awName"></h3>
+      <p class="wiki-sub" id="awSub"></p>
+      <div class="wiki-body" id="awBody"></div>
+      <div class="wiki-rel" id="awRelations"></div>
+      <div class="wiki-works">
+        <p class="wiki-works-title">本展作品</p>
+        <div class="wiki-grid" id="awWorks"></div>
+      </div>
+      <button class="ghost-btn" id="awCloseBtn" type="button">关闭</button>
+    </div>
+  </div>
+
+  <!-- ============ 标签百科 ============ -->
+  <div class="wiki tag-wiki" id="tagWiki" hidden>
+    <div class="wiki-panel" role="dialog" aria-modal="true" aria-labelledby="twTitle">
+      <p class="wiki-kicker">FEATURE ENCYCLOPEDIA</p>
+      <h3 class="wiki-title" id="twTitle"></h3>
+      <p class="wiki-sub" id="twKind"></p>
+      <div class="wiki-body" id="twBody"></div>
+      <div class="wiki-works">
+        <p class="wiki-works-title">相关展品</p>
+        <div class="wiki-grid" id="twWorks"></div>
+      </div>
+      <p class="wiki-source">据文章正文与常见艺术史资料整理</p>
+      <button class="ghost-btn" id="twCloseBtn" type="button">关闭</button>
+    </div>
+  </div>
+
+  <!-- ============ 补充资料 ============ -->
+  <div class="overlay supplement" id="supplement" hidden>
+    <header class="catalog-top">
+      <div class="catalog-title">
+        <p class="eyebrow">SUPPLEMENTARY MATERIALS</p>
+        <h2>补充资料</h2>
+      </div>
+      <button class="icon-btn" id="supplementCloseBtn">关闭 ×</button>
+    </header>
+    <p class="sup-lede">以下图片来自展厅现场与展览资料，作为理解展览的补充，<b>不计入展品与统计</b>。点击任意图片可放大查看。</p>
+    <div class="sup-grid" id="supGrid"></div>
+  </div>
+
+  <!-- ============ 补充资料查看器 ============ -->
+  <div class="sup-viewer" id="supViewer" hidden>
+    <header class="sup-viewer-top">
+      <div>
+        <p class="eyebrow" id="svSub"></p>
+        <h3 id="svTitle"></h3>
+      </div>
+      <div class="tl-head-actions">
+        <button class="ghost-btn" id="svZoomOut">−</button>
+        <button class="ghost-btn" id="svReset">适应</button>
+        <button class="ghost-btn" id="svZoomIn">＋</button>
+        <button class="icon-btn" id="svClose">关闭 ×</button>
+      </div>
+    </header>
+    <div class="sup-scroll" id="supScroll"><img id="supImg" alt=""></div>
+    <p class="sup-note" id="svNote"></p>
+  </div>
+
+  <!-- ============ 观展指南 ============ -->
+  <div class="overlay guide" id="guide" hidden>
+    <div class="guide-panel">
+      <p class="eyebrow">VISITOR GUIDE</p>
+      <h2>观展指南</h2>
+      <p class="guide-lede" id="guideLede"></p>
+      <div class="guide-grid" id="guideGrid"></div>
+      <div class="guide-overview" id="guideOverview"></div>
+      <p class="guide-note" id="guideNote"></p>
+      <button class="primary" id="guideCloseBtn">知道了</button>
+    </div>
+  </div>
+
+  <div class="loading-mask" id="loadingMask">
+    <div class="loading-seal">印</div>
+    <p>正在布展…</p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
